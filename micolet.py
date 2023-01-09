@@ -22,10 +22,10 @@ def main():
     
     outputFile = open("MicoletSearch.txt","w")
     
-    for i in range(1, 50):
+    for i in range(1, 150):
         if(soldOut):
             break
-        URL = f"https://www.micolet.pt/roupa-homem-segunda-mao?condition=new&page={i}&size=m%2Cl&subcategories=106"
+        URL = f"https://www.micolet.pt/roupa-homem-segunda-mao?category=1&condition=new&page={i}&size=l&tag_ids=132&type_tags_ids=132"
 
         driver.get(URL)
         #driver.execute_script("window.scrollTo(0, document.body.scrollHeight);")
@@ -43,13 +43,14 @@ def main():
         #print(itemDivs)
         for item in itemDivs:
             iterator+=1
-            addToCartElement = item.findChildren("div", {"class": "thumb-add-to-cart"}, recursive=True)
+            addToCartElement = item.findChildren("button", {"class": "mt5 thumb-add-to-cart"}, recursive=True)
+            addToCart2 = item.findChildren("button", {"class": "mt5 thumb-add-to-cart discount"}, recursive=True);
             #print(itemDivs)
-            if(len(addToCartElement) == 0):
+            if(len(addToCartElement) + len(addToCart2) == 0):
                 print("ESGOTADO")
                 soldOut = True
                 break
-            imageElement = item.findChildren("img", {"class": "img-responsive center-block lazy"}, recursive=True)
+            imageElement = item.findChildren("img", {"class": "img-responsive lazy"}, recursive=True)
             
             
             #URL
